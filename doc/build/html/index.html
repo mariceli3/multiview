@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Multiview learning &#8212; multiview 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CPC" href="cpc.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cpc.html" title="CPC"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="multiview-learning">
+<h1>Multiview learning<a class="headerlink" href="#multiview-learning" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Given a multiview dataset with <code class="docutils literal"><span class="pre">v</span></code> input data matrices, multiview dimensionality
+reduction methods produce a single, low-dimensional projection of the input data
+samples, trying to maintain as much of the original information as possible.</p>
+<p>Multiview learning can be thought of as an effort to adapt some of the manifold algorithms
+principles to algorithms whose main inputs are multiview data. These data can be understood
+as different views of the same data, so it is attempted to use these views to and all their
+information for dimensionality reduction and spectral clustering.</p>
+<p>Methods developed here are adaptions of single view algorithms to multiview data.
+Also, these modules are translation from the multiview package, firstly written in
+R.</p>
+</div>
+<div class="section" id="mvmds">
+<span id="id1"></span><h2>MVMDS<a class="headerlink" href="#mvmds" title="Permalink to this headline">¶</a></h2>
+<p>MVMDS (Multiview Multidimensional Scaling) ia one of the approaches to dimensionality reduction that offers the class
+<a class="reference internal" href="mvmds.html"><span class="doc">MV-MDS</span></a> to perform multiview dimensionality reduction in a similar way than
+the multidimensional scaling method does (similar to <code class="docutils literal"><span class="pre">cmdscale</span></code> in R language).
+In general, it is a technique used for analyzing similarity or dissimilarity data.</p>
+<a class="reference internal image-reference" href="_images/mvmds.png"><img alt="_images/mvmds.png" class="align-center" src="_images/mvmds.png" style="width: 384.0px; height: 286.8px;" /></a>
+<div class="section" id="complexity">
+<h3>Complexity<a class="headerlink" href="#complexity" title="Permalink to this headline">¶</a></h3>
+<p>MVMDS computes distance matrices from plain data matrices is so and preprocesses these distance
+matrices (centering and double square). Lastly, it extracts commom principal components
+of the processed data. The overall complexity is about
+<span class="math">O[k n^2 v]</span>.</p>
+<ul class="simple">
+<li><span class="math">n</span>: number of samples of each view</li>
+<li><span class="math">k</span>: components to extract</li>
+<li><span class="math">v</span>: number of different views</li>
+</ul>
+</div>
+</div>
+<div class="section" id="mvtsne">
+<span id="id2"></span><h2>MvtSNE<a class="headerlink" href="#mvtsne" title="Permalink to this headline">¶</a></h2>
+<p>Another dimensionality reduction function in this package is the class <a class="reference internal" href="mvtsne.html"><span class="doc">MVtSNE</span></a>, that
+extends the <code class="docutils literal"><span class="pre">tsne</span></code> algorithm (available in <code class="docutils literal"><span class="pre">manifold</span></code> module) to work with multiview data.
+It based on the conversion of affinities of data to probabilities. The affinities
+in the original space are represented by Gaussian joint probabilities and the affinities
+in the embedded space are represented by Student&#8217;s t-distributions.</p>
+<a class="reference internal image-reference" href="_images/mvtsne-6.png"><img alt="_images/mvtsne-6.png" class="align-center" src="_images/mvtsne-6.png" style="width: 384.0px; height: 286.8px;" /></a>
+<div class="section" id="id3">
+<h3>Complexity<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>The MvtSNE algorithm comprises two steps:</p>
+<p>1. <strong>Opinion pooling finding</strong>: MvtSNE computes optimal pooling of probabilities for
+each view from affinities of data points. It runs an optimizer to find the best set
+of weights. Start point at (1/v,..) using bounds to limit the weights to 0..1. Then,
+it computes KL between the different probabilities. The overall complexity of opinion
+pooling finding is
+<span class="math">O[n^2 v^2]</span> +  <span class="math">O[w n^2]</span>.</p>
+<p>2. <strong>tSNE application</strong>: this stage applies tSNE (t-distributed Stochastic Neighbor Embedding)
+to the multiple views of the same data. Its complexity is about <span class="math">O[n^2 v m]</span>.</p>
+<p>The overall complexity of MvtSNE is
+<span class="math">O[n^2 v^2] + O[w n^2] + O[n^2 v m]</span>.</p>
+<ul class="simple">
+<li><span class="math">n</span>: number of samples of each view</li>
+<li><span class="math">v</span>: number of different views</li>
+<li><span class="math">w</span>: weights dimension</li>
+<li><span class="math">m</span>: input maximum iteration</li>
+</ul>
+</div>
+</div>
+<div class="section" id="mvsc">
+<span id="id4"></span><h2>MVSC<a class="headerlink" href="#mvsc" title="Permalink to this headline">¶</a></h2>
+<p>Given a multiview dataset with <code class="docutils literal"><span class="pre">v</span></code> input data matrices, multiview spectral clustering (MVSC) methods
+produce a single clustering assignment, considering the information from all the
+input views.
+Package <code class="docutils literal"><span class="pre">multiview</span></code> offers the class <a class="reference internal" href="mvsc.html"><span class="doc">MV-SC</span></a> to perform multiview spectral
+clustering. It is an extension to spectral clustering (<code class="docutils literal"><span class="pre">kernlab::specc</span></code> in R language)
+to multiview datasets.</p>
+<div class="section" id="id5">
+<h3>Complexity<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>Multiview spectral clustering computes the diagonal matrix of the similarity matrices.
+Firstly, computes distance matrices if necessary. After that, calculates laplacian matrices,
+extracts commom principal components and apply KMeans algorithm to obtained data.
+Roughly, the complexity of MVSC is
+<span class="math">O[k n^2 v] + O[n \log(n)]</span>.</p>
+<ul class="simple">
+<li><span class="math">n</span>: number of samples of each view</li>
+<li><span class="math">v</span>: number of different views</li>
+<li><span class="math">k</span>: components to extract</li>
+</ul>
+</div>
+</div>
+<div class="section" id="alternative-use">
+<h2>Alternative use<a class="headerlink" href="#alternative-use" title="Permalink to this headline">¶</a></h2>
+<p>Although the methods in this package have been divided in dimensionality reduction
+and clustering, there is a close relationship between both tasks. In fact, all three
+methods can be used for both tasks.</p>
+<p>First, the data projection produced by dimensionality reduction methods can be
+fed to a standard clustering algorithm in order to obtain a multiview clustering.
+Second, as mvsc also returns the projection resulting from the k first common
+eigenvectors in matrix $evectors, this space can also be used as a low-dimensional
+embedding of the original multiview data, for visualization or other purposes.</p>
+<div class="topic">
+<p class="topic-title first">References:</p>
+<ul class="simple">
+<li>Abbas, Ali E. 2009. &#8220;A Kullback-Leibler View of Linear and Log-Linear Pools.&#8221; <em>Decision Analysis</em>
+6 (1): 25-37. doi:<a class="reference external" href="http://pubsonline.informs.org/doi/abs/10.1287/deca.1080.0133">10.1287/deca.1080.0133</a>.</li>
+<li>Carvalho, Arthur, and Kate Larson. 2012. &#8220;A Consensual Linear Opinion Pool.&#8221;
+<a class="reference external" href="http://arxiv.org/abs/1204.5399">http://arxiv.org/abs/1204.5399</a>.</li>
+<li>Kruskal, J B. 1964. &#8220;Multidimensional scaling by optimizing goodness of fit to
+a nonmetric hypothesis.&#8221; <em>Psychometrika</em> 29 (1): 1-27. doi:<a class="reference external" href="https://link.springer.com/article/10.1007%2FBF02289565">10.1007/BF02289565</a>.</li>
+<li>Ng, Andrew Y, Michael I Jordan, and Yair Weiss. 2001. &#8220;On spectral clustering:
+Analysis and an algorithm.&#8221; <em>Nips</em> 14 (14). MIT Press: 849-56.</li>
+<li>Planck, Max, and Ulrike Von Luxburg. 2006. &#8220;A Tutorial on Spectral Clustering.&#8221;
+<em>Statistics and Computing</em> 17 (March). Springer US: 395-416. doi
+<a class="reference external" href="https://link.springer.com/article/10.1007%2Fs11222-007-9033-z">10.1007/s11222-007-9033-z</a>.</li>
+<li>Shi, Jianbo, and Jitendra Malik. 2005. &#8220;Normalized Cuts and Image Segmentation
+Normalized Cuts and Image Segmentation.&#8221; <em>Pattern Analysis and Machine Intelligence, IEEE Transactions</em>
+on 22 (March): 888-905. doi:<a class="reference external" href="http://ieeexplore.ieee.org/document/609407/?reload=true">10.1109/CVPR.1997.609407</a>.</li>
+<li>Trendafilov, Nickolay T. 2010. &#8220;Stepwise estimation of common principal
+components.&#8221; <em>Computational Statistics and Data Analysis</em> 54 (12): 3446-57.
+doi:<a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S016794731000112X?via%3Dihub">10.1016/j.csda.2010.03.010</a>.</li>
+<li>Van Der Maaten, Laurens, Geoffrey Hinton, and Geoffrey Hinton van der Maaten.
+2008. &#8220;Visualizing Data using t-SNE.&#8221; doi:<a class="reference external" href="https://link.springer.com/article/10.1007%2Fs10479-011-0841-3">10.1007/s10479-011-0841-3</a>.</li>
+<li>Multiview features dataset. <a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/Multiple+Features">https://archive.ics.uci.edu/ml/datasets/Multiple+Features</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Multiview learning</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#mvmds">MVMDS</a><ul>
+<li><a class="reference internal" href="#complexity">Complexity</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mvtsne">MvtSNE</a><ul>
+<li><a class="reference internal" href="#id3">Complexity</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mvsc">MVSC</a><ul>
+<li><a class="reference internal" href="#id5">Complexity</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#alternative-use">Alternative use</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cpc.html"
+                        title="next chapter">CPC</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cpc.html" title="CPC"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Maria Araceli Burgueño Caballero.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

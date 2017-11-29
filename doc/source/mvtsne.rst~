@@ -1,0 +1,17 @@
+  
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+MVtSNE
+======
+Multiview t-distributed Stochastic Neighbour Embedding
+------------------------------------------------------
+
+   
+.. automodule:: multiview.mvtsne
+
+.. autoclass:: MvtSNE
+
+  .. automethod:: fit
+  .. automethod:: fit_transform

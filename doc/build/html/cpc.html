@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CPC &#8212; multiview 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MV-MDS" href="mvmds.html" />
+    <link rel="prev" title="Multiview learning" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mvmds.html" title="MV-MDS"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Multiview learning"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="cpc">
+<h1>CPC<a class="headerlink" href="#cpc" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-multiview.cpcmv">
+<span id="multiview-common-principal-components"></span><h2>Multiview Common Principal Components<a class="headerlink" href="#module-multiview.cpcmv" title="Permalink to this headline">¶</a></h2>
+<p>CPC computes Common principal components of a set of matrices.</p>
+<p>This file uses a variation of Trendafilov (2010) method to compute
+the k first common principal components of a set of matrices in an
+efficient way</p>
+<dl class="class">
+<dt id="multiview.cpcmv.MVCPC">
+<em class="property">class </em><code class="descclassname">multiview.cpcmv.</code><code class="descname">MVCPC</code><span class="sig-paren">(</span><em>k=0</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.cpcmv.MVCPC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute common principal components of x.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>k</strong> (<em>int</em><em>, </em><em>default 0</em>) &#8211; Number of components to extract (0 means all p components).</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="multiview.cpcmv.MVCPC.eigenvalues_">
+<code class="descname">eigenvalues_</code><a class="headerlink" href="#multiview.cpcmv.MVCPC.eigenvalues_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ndarray</em> &#8211; Stores the eigenvalues computed in the algorithm.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="multiview.cpcmv.MVCPC.eigenvectors_">
+<code class="descname">eigenvectors_</code><a class="headerlink" href="#multiview.cpcmv.MVCPC.eigenvectors_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ndarray</em> &#8211; Stores the eigenvectors computed in the algorithm.</p>
+</dd></dl>
+
+<p class="rubric">References</p>
+<p>Trendafilov, N. (2010). Stepwise estimation of common principal
+components. <em>Computational Statistics and Data Analysis</em>, 54,
+3446–3457.</p>
+<dl class="method">
+<dt id="multiview.cpcmv.MVCPC.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.cpcmv.MVCPC.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute k common principal components of x.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>array_like</em><em> or </em><em>ndarray</em>) &#8211; A set of n matrices of dimension pxp given as a n x p x p  matrix.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="multiview.cpcmv.MVCPC.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.cpcmv.MVCPC.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute k common principal components of x, and return those
+components.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>x</strong> (<em>array_like</em><em> or </em><em>ndarray</em>) &#8211; A set of n matrices of dimension pxp given as a n x p x p  matrix.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>values</strong> &#8211; Tuple with two elements:</p>
+<p>the eigenvalues</p>
+<p>the common eigenvectors</p>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">tuple</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li>ValueError: Matrices are not square matrices or k value is</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">negative.</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]],</span>
+<span class="go">              [[1, 4, 7], [2, 5, 8], [3, 6, 9]]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mv_cpc</span> <span class="o">=</span> <span class="n">MVCPC</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mv_cpc</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">(array([[ 16.09601677,  16.21849616],</span>
+<span class="go">        [ -0.11903382,  -0.85516505],</span>
+<span class="go">        [  0.02301705,  -0.3633311 ]]),</span>
+<span class="go">        array([[ 0.45139369, -0.88875921,  0.07969196],</span>
+<span class="go">        [ 0.55811719,  0.35088538,  0.75192065],</span>
+<span class="go">        [ 0.69623914,  0.29493478, -0.65441923]]))</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">CPC</a><ul>
+<li><a class="reference internal" href="#module-multiview.cpcmv">Multiview Common Principal Components</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Multiview learning</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mvmds.html"
+                        title="next chapter">MV-MDS</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/cpc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mvmds.html" title="MV-MDS"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Multiview learning"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Maria Araceli Burgueño Caballero.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MV-SC &#8212; multiview 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MVtSNE" href="mvtsne.html" />
+    <link rel="prev" title="MV-MDS" href="mvmds.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mvtsne.html" title="MVtSNE"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mvmds.html" title="MV-MDS"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="mv-sc">
+<h1>MV-SC<a class="headerlink" href="#mv-sc" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-multiview.mvsc">
+<span id="multiview-spectral-clustering"></span><h2>Multiview Spectral Clustering<a class="headerlink" href="#module-multiview.mvsc" title="Permalink to this headline">¶</a></h2>
+<p>Multiview Spectral Clustering.</p>
+<p>It provides a function, mvsc, which produces
+a single clustering assigment, but considering all the input data from
+different views.</p>
+<dl class="class">
+<dt id="multiview.mvsc.MVSC">
+<em class="property">class </em><code class="descclassname">multiview.mvsc.</code><code class="descname">MVSC</code><span class="sig-paren">(</span><em>k=2</em>, <em>sigmas=None</em>, <em>neighbours=None</em>, <em>clustering=True</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.mvsc.MVSC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiview spectral clustering on a list of matrices or distance matrices.</p>
+<p>Computes the multiview spectral clustering of data on a list of matrices
+or distance matrices (or a mix of both), supposed to be different views of
+the same data.
+In the case of plain data matrices, euclidean distance will be used to
+generate distance matrices for that data view.</p>
+<p class="rubric">Notes</p>
+<p>All input views must have the same number of samples (rows).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>k</strong> (<em>int</em>) &#8211; Number of desired clusters.</li>
+<li><strong>sigmas</strong> (<em>Either None</em><em>, </em><em>an integer value</em><em> or </em><em>a vector of int</em><em>, </em><em>default: None</em>) &#8211; They correspond to the sigma parameter in the Gaussian radial basis
+function. If it is None then the default sigma computation is used
+(average distance to the log(n)-th neighbour, with n = number of
+samples), unless neighbours has a value different from None.
+If it is a single number then the same sigma is applied to all input
+views. If it is a vector each value in it is applied to the
+corresponding input view.</li>
+<li><strong>neighbours</strong> (<em>Either None</em><em>, </em><em>an integer value</em><em> or </em><em>a vector of int</em><em>, </em><em>default: None</em>) &#8211; They correspond to the expected number of neighbours per point, used
+to estimate the sigma values of the Gaussian radial basis function.
+If it is NULL then the default sigma computation is used (average
+distance to the log(n)-th neighbour, with n = number of samples).
+If it is a single value then the same number of neighbours is used
+on all input views, else each value in the vector is applied to the
+corresponding input view. Does not have effect if sigma is different
+from None.</li>
+<li><strong>clustering</strong> (<em>boolean</em>) &#8211; Tells mvsc if it has to perform the clustering on the projection or to
+skip the clustering step of the algorithm.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="multiview.mvsc.MVSC.embedding_">
+<code class="descname">embedding_</code><a class="headerlink" href="#multiview.mvsc.MVSC.embedding_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ndarray</em> &#8211; Clustering of the nviews input data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="multiview.mvsc.MVSC.evalues_">
+<code class="descname">evalues_</code><a class="headerlink" href="#multiview.mvsc.MVSC.evalues_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ndarray</em> &#8211; Eigenvalues computed during spectral clustering.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="multiview.mvsc.MVSC.evectors_">
+<code class="descname">evectors_</code><a class="headerlink" href="#multiview.mvsc.MVSC.evectors_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ndarray</em> &#8211; Eigenvectors computed during spectral clustering.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="multiview.mvsc.MVSC.sigmas_">
+<code class="descname">sigmas_</code><a class="headerlink" href="#multiview.mvsc.MVSC.sigmas_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ndarray</em> &#8211; Best sigmas used for calculating Gaussian similarity.</p>
+</dd></dl>
+
+<p class="rubric">References</p>
+<p>Ng, Andrew Y, Michael I Jordan, and Yair Weiss. 2001. “On spectral
+clustering: Analysis and an algorithm.” <em>Nips</em> 14 (14). MIT Press:
+849–56. doi:10.1.1.19.8100.</p>
+<p>Planck, Max, and Ulrike Von Luxburg. 2006. “A Tutorial on Spectral
+Clustering A Tutorial on Spectral Clustering.” <em>Statistics and
+Computing</em> 17 (March). Springer US: 395–416.
+doi:10.1007/s11222-007-9033-z.</p>
+<p>Shi, Jianbo, and Jitendra Malik. 2005. “Normalized Cuts and Image
+Segmentation Normalized Cuts and Image Segmentation.” <em>Pattern
+Analysis and Machine Intelligence, IEEE Transactions</em> on 22 (March):
+888–905. doi:10.1109/CVPR.1997.609407.</p>
+<p>Trendafilov, Nickolay T. 2010. “Stepwise estimation of common principal
+components.” <em>Computational Statistics and Data Analysis</em> 54 (12):
+3446–57. doi:10.1016/j.csda.2010.03.010.</p>
+<dl class="method">
+<dt id="multiview.mvsc.MVSC.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x</em>, <em>is_distance</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.mvsc.MVSC.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the multiview spectral clustering and return the clustering,
+eigenvalues, eienvectors and sigmas used in the computation.</p>
+<p class="rubric">Notes</p>
+<p>All input views must have the same number of samples (rows).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> (<em>list</em>) &#8211; A list of feature matrices or distance matrices (or a mix of both).</li>
+<li><strong>is_distance</strong> (<em>array-like.</em>) &#8211; A list or array which indicates whether a matrix with the same
+index in x is a distance matrix (true value) or not (false value).</li>
+<li><strong>k</strong> (<em>int</em>) &#8211; Number of desired clusters.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="multiview.mvsc.MVSC.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em>, <em>is_distance</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.mvsc.MVSC.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the multiview spectral clustering and return the clustering,
+eigenvalues, eienvectors and sigmas used in the computation.</p>
+<p class="rubric">Notes</p>
+<p>All input views must have the same number of samples (rows).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>list</em>) &#8211; A list of feature matrices or distance matrices (or a mix of both).</li>
+<li><strong>is_distance</strong> (<em>array-like.</em>) &#8211; A list or array which indicates whether a matrix with the same
+index in x is a distance matrix (true value) or not (false value).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>A tuple with four elements:</p>
+<p>clustering is a vector of integers with the clustering assignment
+of each sample (not included if clustering = FALSE)</p>
+<p>evalues is a matrix with the eigenvalues of the common principal
+components (CPC) step</p>
+<p>evectors is a matrix with the eigenvectors of the CPC step</p>
+<p>sigmas is a vector with the sigmas used on the Gaussian radial
+basis
+function of each input view.</p>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">tuple</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li>ValueError: Matrices are not square matrices, k value is negative</li>
+<li>or data samples and is_distance parameters do not have the same</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">length.</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">matrices</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_distance</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mvsc</span> <span class="o">=</span> <span class="n">MVSC</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mvsc</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">matrices</span><span class="p">,</span> <span class="n">is_distance</span><span class="p">)</span>
+<span class="go">    (array([1, 2, 0]), array([[ 0.99983709, 0.99983709,  0.99947615],</span>
+<span class="go">                              [ 0.49076485, 0.49076485,  0.44022256],</span>
+<span class="go">                              [ 0.10945481, 0.10945481,  0.15255827]]),</span>
+<span class="go">    array([[-0.56674541,  0.64092999, -0.51769527],</span>
+<span class="go">           [-0.61728928,  0.08583247,  0.78204011],</span>
+<span class="go">           [-0.54566802, -0.76278538, -0.34699406]]),</span>
+<span class="go">    [1.7320508075688774, 1.7320508075688774, 5.2779168675293677])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MV-SC</a><ul>
+<li><a class="reference internal" href="#module-multiview.mvsc">Multiview Spectral Clustering</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mvmds.html"
+                        title="previous chapter">MV-MDS</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mvtsne.html"
+                        title="next chapter">MVtSNE</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mvsc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mvtsne.html" title="MVtSNE"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mvmds.html" title="MV-MDS"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Maria Araceli Burgueño Caballero.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

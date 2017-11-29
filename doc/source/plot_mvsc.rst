@@ -1,0 +1,124 @@
+  
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+   
+====================================================
+Multiview Spectral Clustering with multiple features
+====================================================
+
+An illustration of the multiview spectral clustering with the multiple features
+data set. It consists on the clustering of four different views.
+
+Here it is shown the output result of an implementation of MV SC with 10 clusters.
+Dataset used in this examples is available 
+`here <https://archive.ics.uci.edu/ml/datasets/Multiple+Features>`_.
+
+===  ===  === ===  ===  === ===  ===  === ===  === 
+ I    1    2   3    4    5   6    7    8   9    10
+===  ===  === ===  ===  === ===  ===  === ===  ===
+0    181   18  0    0    0   1    0    0   0    0
+1     0    1   3    1    0   0    4   189  2    0 
+2     0    0   0    0    1   1    3    0   0   195
+3     0    0   5    10  178  0    0    3   0    4
+4     0    0   0   195   0   2    0    2   1    0
+5     0    0   0    5    8  186   0    0   0    1 
+6     0    7   1    0    0   2    0    2  188   0
+7     0    0  154   1    0   0    38   2   0    5
+8     4   190  0    0    0   0    0    6   0    0
+9     0   6    3    1    1   3   182   4   0    0
+===  ===  === ===  ===  === ===  ===  === ===  === 
+
+.. code-block:: python
+
+    # Author: Maria Araceli Burgueno Caballero <mburgueno@uoc.edu>
+    import numpy as np
+    import pandas
+    from multiview.mvsc import MVSC
+
+
+    def readData(filename, data_type=0):
+        if data_type != 0 and data_type != 1:
+             raise ValueError('data_type must be either 0 or 1. Found value %d '
+                         'instead.' % data_type)
+        with open(filename) as txtfile:
+
+             result = []
+             myreader = txtfile.readlines()
+
+            for row in myreader:
+                if data_type == 0:
+                    result.append([float(x) for x in row.split()])
+                elif data_type == 1:
+                    result.append([int(x) for x in row.split()])
+        if data_type == 0:
+             return np.array(result, dtype='float')
+        else:
+             return np.array(result, dtype='int')
+
+    fourier = readData("mfeat-fou.txt", 0)
+    profcorr = readData("mfeat-fac.txt", 1)
+    pixels = readData("mfeat-pix.txt", 1)
+    morpho = readData("mfeat-mor.txt", 0)
+
+    classes = np.array([[x] * 200 for x in range(10)]).ravel()
+    markers = ['o', '2', '<', '*', 'h', 'x', 'D', '|', '_', 'v']
+    mypalette = ['green', 'purple', 'pink', 'blue', 'black',
+             'brown', 'yellow', 'orange', 'gray', 'red']
+
+    distance = [False] * 4
+
+    mvsc = MVSC(k=10)
+    clust = mvsc.fit_transform([fourier, profcorr, pixels, morpho], distance)
+    clustering = clust[0]
+    labels_count = [np.unique(
+        clustering[200 * i: 200 * (i + 1)], return_counts=True)
+        for i in range(10)]
+    clustered = np.zeros((10, 10), dtype=int)
+    for i in range(10):
+        for index, j in enumerate(labels_count[i][0]):
+            clustered[i, j] = labels_count[i][1][index]
+    classes = np.arange(10)
+    print("############################################")
+    print("#               TEN CLUSTERS               #")
+    print("############################################")
+    print(pandas.DataFrame(clustered, classes, classes))
+
+
+Here it is shown the output result of an implementation of MV SC with 10 clusters
+and 2 neighbours for each point in the clustering space.
+
+===  ===  === ===  ===  === ===  ===  === ===  === 
+ I    1    2   3    4    5   6    7    8   9    10
+===  ===  === ===  ===  === ===  ===  === ===  ===
+ 0    0    0  190    0   10   0    0    0   0   0
+ 1   192   0    0    0    0   1    6    1   0   0
+ 2    0    0    0  197    0   0    1    2   0   0
+ 3    8   181   0    3    0   2    3    1   2   0
+ 4    2    0    0    0    0 193    0    0   5   0
+ 5    0    5    0    1    0   3    0    0 191   0
+ 6    2    0    0    0   14   1    0    0   0  183
+ 7    1    0    0    4    0   0  170   25   0   0
+ 8    7    0    2    0  191   0    0    0   0   0
+ 9    5    0    0    0    4   1    0  183   7   0
+===  ===  === ===  ===  === ===  ===  === ===  === 
+
+.. code-block:: python
+
+    mvsc = MVSC(k=10, neighbours=2)
+    clust = mvsc.fit_transform([fourier, profcorr, pixels, morpho], distance)
+    clustering = clust[0]
+    labels_count = [np.unique(
+         clustering[200 * i: 200 * (i + 1)], return_counts=True)
+         for i in range(10)]
+    clustered = np.zeros((10, 10), dtype=int)
+    for i in range(10):
+        for index, j in enumerate(labels_count[i][0]):
+            clustered[i, j] = labels_count[i][1][index]
+    classes = np.arange(10)
+    print("############################################")
+    print("#       TEN CLUSTERS AND NEIGHBOURS 2      #")
+    print("############################################")
+    print(pandas.DataFrame(clustered, classes, classes))
+    
+**Total running time of the script:** ( 1 minutes 10.6 seconds)

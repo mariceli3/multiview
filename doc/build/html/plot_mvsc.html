@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Multiview Spectral Clustering with multiple features &#8212; multiview 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Multiview tSNE with multiple features" href="plot_mvtsne.html" />
+    <link rel="prev" title="Multiview MDS with multiple features" href="plot_mvmds.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plot_mvtsne.html" title="Multiview tSNE with multiple features"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="plot_mvmds.html" title="Multiview MDS with multiple features"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="multiview-spectral-clustering-with-multiple-features">
+<h1>Multiview Spectral Clustering with multiple features<a class="headerlink" href="#multiview-spectral-clustering-with-multiple-features" title="Permalink to this headline">¶</a></h1>
+<p>An illustration of the multiview spectral clustering with the multiple features
+data set. It consists on the clustering of four different views.</p>
+<p>Here it is shown the output result of an implementation of MV SC with 10 clusters.
+Dataset used in this examples is available
+<a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/Multiple+Features">here</a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">I</th>
+<th class="head">1</th>
+<th class="head">2</th>
+<th class="head">3</th>
+<th class="head">4</th>
+<th class="head">5</th>
+<th class="head">6</th>
+<th class="head">7</th>
+<th class="head">8</th>
+<th class="head">9</th>
+<th class="head">10</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>181</td>
+<td>18</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>189</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>195</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>10</td>
+<td>178</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>195</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>8</td>
+<td>186</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0</td>
+<td>7</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>188</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>0</td>
+<td>0</td>
+<td>154</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>38</td>
+<td>2</td>
+<td>0</td>
+<td>5</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>4</td>
+<td>190</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>0</td>
+<td>6</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>182</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Author: Maria Araceli Burgueno Caballero &lt;mburgueno@uoc.edu&gt;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">from</span> <span class="nn">multiview.mvsc</span> <span class="kn">import</span> <span class="n">MVSC</span>
+
+
+<span class="k">def</span> <span class="nf">readData</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">data_type</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">data_type</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;data_type must be either 0 or 1. Found value </span><span class="si">%d</span><span class="s1"> &#39;</span>
+                     <span class="s1">&#39;instead.&#39;</span> <span class="o">%</span> <span class="n">data_type</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">txtfile</span><span class="p">:</span>
+
+         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+         <span class="n">myreader</span> <span class="o">=</span> <span class="n">txtfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">myreader</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
+            <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
+    <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+
+<span class="n">fourier</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s2">&quot;mfeat-fou.txt&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">profcorr</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s2">&quot;mfeat-fac.txt&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">pixels</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s2">&quot;mfeat-pix.txt&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">morpho</span> <span class="o">=</span> <span class="n">readData</span><span class="p">(</span><span class="s2">&quot;mfeat-mor.txt&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="mi">200</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)])</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">markers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">]</span>
+<span class="n">mypalette</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="s1">&#39;pink&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">]</span>
+
+<span class="n">distance</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+
+<span class="n">mvsc</span> <span class="o">=</span> <span class="n">MVSC</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">clust</span> <span class="o">=</span> <span class="n">mvsc</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="n">fourier</span><span class="p">,</span> <span class="n">profcorr</span><span class="p">,</span> <span class="n">pixels</span><span class="p">,</span> <span class="n">morpho</span><span class="p">],</span> <span class="n">distance</span><span class="p">)</span>
+<span class="n">clustering</span> <span class="o">=</span> <span class="n">clust</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">labels_count</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+    <span class="n">clustering</span><span class="p">[</span><span class="mi">200</span> <span class="o">*</span> <span class="n">i</span><span class="p">:</span> <span class="mi">200</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">return_counts</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="n">clustered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels_count</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">clustered</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels_count</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+<span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;############################################&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;#               TEN CLUSTERS               #&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;############################################&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">clustered</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">classes</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Here it is shown the output result of an implementation of MV SC with 10 clusters
+and 2 neighbours for each point in the clustering space.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">I</th>
+<th class="head">1</th>
+<th class="head">2</th>
+<th class="head">3</th>
+<th class="head">4</th>
+<th class="head">5</th>
+<th class="head">6</th>
+<th class="head">7</th>
+<th class="head">8</th>
+<th class="head">9</th>
+<th class="head">10</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0</td>
+<td>0</td>
+<td>190</td>
+<td>0</td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>192</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>6</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>197</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>8</td>
+<td>181</td>
+<td>0</td>
+<td>3</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>193</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>191</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>14</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>183</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>170</td>
+<td>25</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>7</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>191</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>183</td>
+<td>7</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mvsc</span> <span class="o">=</span> <span class="n">MVSC</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">neighbours</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">clust</span> <span class="o">=</span> <span class="n">mvsc</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="n">fourier</span><span class="p">,</span> <span class="n">profcorr</span><span class="p">,</span> <span class="n">pixels</span><span class="p">,</span> <span class="n">morpho</span><span class="p">],</span> <span class="n">distance</span><span class="p">)</span>
+<span class="n">clustering</span> <span class="o">=</span> <span class="n">clust</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">labels_count</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+     <span class="n">clustering</span><span class="p">[</span><span class="mi">200</span> <span class="o">*</span> <span class="n">i</span><span class="p">:</span> <span class="mi">200</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">return_counts</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="n">clustered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels_count</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">clustered</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels_count</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+<span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;############################################&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;#       TEN CLUSTERS AND NEIGHBOURS 2      #&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;############################################&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">clustered</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">classes</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Total running time of the script:</strong> ( 1 minutes 10.6 seconds)</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="plot_mvmds.html"
+                        title="previous chapter">Multiview MDS with multiple features</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="plot_mvtsne.html"
+                        title="next chapter">Multiview tSNE with multiple features</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/plot_mvsc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plot_mvtsne.html" title="Multiview tSNE with multiple features"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="plot_mvmds.html" title="Multiview MDS with multiple features"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Maria Araceli Burgueño Caballero.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MV-MDS &#8212; multiview 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MV-SC" href="mvsc.html" />
+    <link rel="prev" title="CPC" href="cpc.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mvsc.html" title="MV-SC"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cpc.html" title="CPC"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="mv-mds">
+<h1>MV-MDS<a class="headerlink" href="#mv-mds" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-multiview.mvmds">
+<span id="multiview-multidimensional-scaling"></span><h2>Multiview Multidimensional Scaling<a class="headerlink" href="#module-multiview.mvmds" title="Permalink to this headline">¶</a></h2>
+<p>Multiview MDS (multidimensional scaling) provides a representation of the
+pattern of proximities among a set of matrices. Likewise, these matrices are
+composed of different attributes, which have a pattern of proximities as well.
+Coding of two principal functions found in mvmds file. The first function,
+preprocess mvmds, preprocess data for multiview MDs algorithm The second,
+md_mds, computes the MDS algorithm itself for a set of matrices.</p>
+<dl class="class">
+<dt id="multiview.mvmds.MVMDS">
+<em class="property">class </em><code class="descclassname">multiview.mvmds.</code><code class="descname">MVMDS</code><span class="sig-paren">(</span><em>k=2</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.mvmds.MVMDS" title="Permalink to this definition">¶</a></dt>
+<dd><p>It  receives two or more feature matrices or distance matrices, according
+to is_distance parameters and produces a low-dimensional representation
+of the samples according to the combined information in all the input data.
+In the case of plain data matrices, euclidean distance will be used to
+generate distance matrices for that data view.
+Mv_MDS preprocess input matrix wih square and double center.</p>
+<p class="rubric">Notes</p>
+<p>All input views must have the same number of samples (rows).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>k</strong> (<em>int</em><em>, </em><em>default: 2</em>) &#8211; Number of desired dimensions of the low-dimensional projection.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="multiview.mvmds.MVMDS.components_">
+<code class="descname">components_</code><a class="headerlink" href="#multiview.mvmds.MVMDS.components_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ndarray</em> &#8211; Principal components of the dataset input.</p>
+</dd></dl>
+
+<p class="rubric">References</p>
+<p>Kruskal, J B. 1964. “Multidimensional scaling by optimizing goodness
+of fit to a nonmetric hypothesis.” <em>Psychometrika</em> 29 (1): 1–27.
+doi:10.1007/BF02289565.</p>
+<p>Trendafilov, Nickolay T. 2010. “Stepwise estimation of common principal
+components.” <em>Computational Statistics and Data Analysis</em> 54 (12):
+3446–57. doi:10.1016/j.csda.2010.03.010.</p>
+<dl class="method">
+<dt id="multiview.mvmds.MVMDS.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x</em>, <em>is_distance</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.mvmds.MVMDS.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes euclidean distances of X according to <code class="docutils literal"><span class="pre">is_distance</span></code>,
+preprocess these data and fit them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> (<em>list</em>) &#8211; A list of data matrices. Matrices can be raw data or distance
+matrices. In the case of plain data matrices, euclidean distance
+will be used to generate a distance matrix for that data view.</li>
+<li><strong>is_distance</strong> (<em>list</em>) &#8211; Each boolean value indicates wheter the matrix in x with the same
+index is a distance matrix or not.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="multiview.mvmds.MVMDS.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>x</em>, <em>is_distance</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.mvmds.MVMDS.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes euclidean distances of X according to <code class="docutils literal"><span class="pre">is_distance</span></code>,
+preprocess these data, fit and return them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>list</em>) &#8211; A list of data matrices. Matrices can be raw data or distance
+matrices. In the case of plain data matrices, euclidean distance
+will be used to generate a distance matrix for that data view.</li>
+<li><strong>is_distance</strong> (<em>list</em>) &#8211; Each boolean value indicates wheter the matrix in x with the same
+index is a distance matrix or not.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>common</strong> &#8211; A n x k matrix with the k-dimensional projection, where n is the
+number of samples in the dataset.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">ndarray</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li>ValueError: Matrices are not square matrices, k value is negative</li>
+<li>or data samples and is_distance parameters do not have the same</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">length.</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">matrices</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_distance</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mv_mds</span> <span class="o">=</span> <span class="n">MVMDS</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mv_mds</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">matrices</span><span class="p">,</span> <span class="n">is_distance</span><span class="p">)</span>
+<span class="go">array([[-0.55030705 -0.60318224]</span>
+<span class="go">       [-0.24721761  0.77817101]</span>
+<span class="go">       [ 0.79752467 -0.17498877]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="examples-using-mvmds">
+<h2>Examples using <code class="docutils literal"><span class="pre">MVMDS</span></code><a class="headerlink" href="#examples-using-mvmds" title="Permalink to this headline">¶</a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="MVMDS with multiples data views."><div class="figure" id="id1">
+<a class="reference internal image-reference" href="_images/mvmds.png"><img alt="_images/mvmds.png" src="_images/mvmds.png" style="width: 25%;" /></a>
+<p class="caption"><span class="caption-text"><a class="reference internal" href="plot_mvmds.html"><span class="doc">Multiview MDS with multiple features</span></a></span></p>
+</div>
+</div></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MV-MDS</a><ul>
+<li><a class="reference internal" href="#module-multiview.mvmds">Multiview Multidimensional Scaling</a></li>
+<li><a class="reference internal" href="#examples-using-mvmds">Examples using <code class="docutils literal"><span class="pre">MVMDS</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cpc.html"
+                        title="previous chapter">CPC</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mvsc.html"
+                        title="next chapter">MV-SC</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mvmds.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mvsc.html" title="MV-SC"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cpc.html" title="CPC"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Maria Araceli Burgueño Caballero.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

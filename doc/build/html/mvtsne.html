@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MVtSNE &#8212; multiview 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Multiview MDS with multiple features" href="plot_mvmds.html" />
+    <link rel="prev" title="MV-SC" href="mvsc.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plot_mvmds.html" title="Multiview MDS with multiple features"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mvsc.html" title="MV-SC"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="mvtsne">
+<h1>MVtSNE<a class="headerlink" href="#mvtsne" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-multiview.mvtsne">
+<span id="multiview-t-distributed-stochastic-neighbour-embedding"></span><h2>Multiview t-distributed Stochastic Neighbour Embedding<a class="headerlink" href="#module-multiview.mvtsne" title="Permalink to this headline">¶</a></h2>
+<p>MV-tSNE with log-linear opinion pooling, using GAs to optimize the weights of
+each view (opinion).</p>
+<p>It computes the multiview spectral clustering of data on a list of matrices
+or distance matrices (or a mix of both), supposed to be different views of
+the same data.
+The function is split in two parts, one that computes P and other that
+performs tsne on a given P plus an &#8220;interface&#8221; function that does everything
+efficient way.</p>
+<dl class="class">
+<dt id="multiview.mvtsne.MvtSNE">
+<em class="property">class </em><code class="descclassname">multiview.mvtsne.</code><code class="descname">MvtSNE</code><span class="sig-paren">(</span><em>k=2</em>, <em>initial_dims=30</em>, <em>perplexity=30</em>, <em>max_iter=1000</em>, <em>min_cost=0</em>, <em>epoch_callback=None</em>, <em>whiten=True</em>, <em>epoch=100</em>, <em>random_state=0</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.mvtsne.MvtSNE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiview tSNE using an expert opinion pooling on the input probability
+matrices.</p>
+<p>Given a list of of input views and other parameters, mvtsne computes a
+neighbouring probability matrix for each input view, then finds the
+optimal set of weights to combine these matrices using a log-linear pool,
+and applies the pooled probability matrix as input to the standard tSNE
+procedure, where the probability matrix of the output space is adjusted
+to the pooled probability matrix using Kullback-Liebler divergence.</p>
+<p class="rubric">Notes</p>
+<p>All input views must have the same number of samples (rows).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>k</strong> (<em>int</em><em>, </em><em>default: 2</em>) &#8211; The desired dimension of the resulting embedding.</li>
+<li><strong>initial_dims</strong> (<em>int</em><em>, </em><em>default: 30</em>) &#8211; Number of dimensions to use in the reduction method.</li>
+<li><strong>perplexity</strong> (<em>int</em><em>, </em><em>defuult: 30</em>) &#8211; This perplexity parameter is roughly equivalent to the optimal number
+of neighbours.</li>
+<li><strong>max_iter</strong> (<em>int</em><em>, </em><em>default: 1000</em>) &#8211; Maximum number of iterations to perform.</li>
+<li><strong>min_cost</strong> (<em>numeric</em><em>, </em><em>default: 0</em>) &#8211; The minimum cost value (error) to stop iterations.</li>
+<li><strong>epoch_callback</strong> (<em>callable</em><em>, </em><em>default None</em>) &#8211; A callback function to be called after each epoch (which is a number
+of iterations controlled parameter epoch, see next).</li>
+<li><strong>whiten</strong> (<em>int</em><em>, </em><em>default: 1</em>) &#8211; A boolean value indicating if the data matrices should be whitened.</li>
+<li><strong>epoch</strong> (<em>int</em><em>, </em><em>default: 100</em>) &#8211; The number of iterations between update messages.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Abbas, Ali E. 2009. “A Kullback-Leibler View of Linear and Log-Linear
+Pools.” <em>Decision Analysis</em> 6 (1): 25–37. doi:10.1287/deca.1080.0133.</p>
+<p>Carvalho, Arthur, and Kate Larson. 2012. “A Consensual Linear Opinion
+Pool.” <a class="reference external" href="http://arxiv.org/abs/1204.5399">http://arxiv.org/abs/1204.5399</a>.</p>
+<p>Van Der Maaten, Laurens, Geoffrey Hinton, and Geoffrey Hinton van der
+Maaten. 2008. “Visualizing Data using t-SNE.”
+doi:10.1007/s10479-011-0841-3.</p>
+<dl class="method">
+<dt id="multiview.mvtsne.MvtSNE.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>is_distance</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.mvtsne.MvtSNE.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes standard tSNE algorithm to input multiview data. Return
+the weights used in the algorithm and the probabilitmatrix.</p>
+<p class="rubric">Notes</p>
+<p>All input views must have the same number of samples (rows).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<em>list</em>) &#8211; A list of feature matrices or distance matrices, where each matrix
+is one of the views of the dataset.</li>
+<li><strong>is_distance</strong> (<em>array-like.</em>) &#8211; A list or array which indicates whether a matrix with the same
+index in x is a distance matrix (true value) or not (false value).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="multiview.mvtsne.MvtSNE.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>X</em>, <em>is_distance</em><span class="sig-paren">)</span><a class="headerlink" href="#multiview.mvtsne.MvtSNE.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes standard tSNE algorithm to input multiview data. Return
+the weights used in the algorithm and the probabilitmatrix.</p>
+<p class="rubric">Notes</p>
+<p>All input views must have the same number of samples (rows).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<em>list</em>) &#8211; A list of feature matrices or distance matrices, where each matrix
+is one of the views of the dataset.</li>
+<li><strong>is_distance</strong> (<em>array-like.</em>) &#8211; A list or array which indicates whether a matrix with the same
+index in x is a distance matrix (true value) or not (false value).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="multiview.mvtsne.MvtSNE.embedding_">
+<code class="descname">embedding_</code><a class="headerlink" href="#multiview.mvtsne.MvtSNE.embedding_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ndarray.</em> &#8211; Embedded space.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="multiview.mvtsne.MvtSNE.weights_">
+<code class="descname">weights_</code><a class="headerlink" href="#multiview.mvtsne.MvtSNE.weights_" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ndarray.</em> &#8211; Ideal weights used in the embedding.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>output</strong> &#8211; A tuple with two elements:</p>
+<p>embedding with the k-dimensional embedding of the input samples</p>
+<p>weights with the weights associated to each input data view.</p>
+</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">tuple.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li>ValueError: Matrices are not square matrices, k value is negative,</li>
+<li>data samples and is_distance parameters do not have the same length or</li>
+<li>scalar parameters are negative.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">matrices</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_distance</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mvtsne</span> <span class="o">=</span> <span class="n">MvtSNE</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mvtsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">matrices</span><span class="p">,</span> <span class="n">is_distance</span><span class="p">)</span>
+<span class="go">    (matrix([[-1347.89641563,  -415.25549328],</span>
+<span class="go">             [ 1305.18939063,   398.91164491],</span>
+<span class="go">             [   42.70702501,    16.34384836]]),</span>
+<span class="go">             array([ 0.878037  ,  0.64703391,  0.56962457]))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="examples-using-mvtsne">
+<h2>Examples using <code class="docutils literal"><span class="pre">MvtSNE</span></code><a class="headerlink" href="#examples-using-mvtsne" title="Permalink to this headline">¶</a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="MvtSNE with multiples data views."><div class="figure" id="id1">
+<a class="reference internal image-reference" href="_images/mvtsne-6.png"><img alt="_images/mvtsne-6.png" src="_images/mvtsne-6.png" style="width: 25%;" /></a>
+<p class="caption"><span class="caption-text"><a class="reference internal" href="plot_mvtsne.html"><span class="doc">Multiview tSNE with multiple features</span></a></span></p>
+</div>
+</div></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MVtSNE</a><ul>
+<li><a class="reference internal" href="#module-multiview.mvtsne">Multiview t-distributed Stochastic Neighbour Embedding</a></li>
+<li><a class="reference internal" href="#examples-using-mvtsne">Examples using <code class="docutils literal"><span class="pre">MvtSNE</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mvsc.html"
+                        title="previous chapter">MV-SC</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="plot_mvmds.html"
+                        title="next chapter">Multiview MDS with multiple features</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mvtsne.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plot_mvmds.html" title="Multiview MDS with multiple features"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mvsc.html" title="MV-SC"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multiview 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Maria Araceli Burgueño Caballero.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

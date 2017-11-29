@@ -1,0 +1,70 @@
+  
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+   
+====================================
+Multiview MDS with multiple features
+====================================
+
+An illustration of the multiview multidimensional scaling with the multiple features
+data set. It consists on the scaling of four different views.
+
+Depending on the exact implementation, the result might be slightly different,
+the solution might be symmetric to the one shown here.
+
+.. image:: ystatic/mvmds.png
+    :align: center
+
+.. code-block:: python
+
+    # Author: Maria Araceli Burgueno Caballero <mburgueno@uoc.edu>
+    
+    import numpy as np
+    from mvmds import MVMDS
+    from matplotlib import pyplot as plt
+
+    def readData(filename, data_type=0):
+         """Given a txt file, returns a numpy matrix with the values, according
+         to datatype specified in data_type parameters."""
+         if data_type != 0 and data_type != 1:
+             raise ValueError('data_type must be either 0 or 1. Found value %d '
+                              'instead.' % data_type)
+        with open(filename) as txtfile:
+
+            result = []
+            myreader = txtfile.readlines()
+
+            for row in myreader:
+                if data_type == 0:
+                    result.append([float(x) for x in row.split()])
+                elif data_type == 1:
+                    result.append([int(x) for x in row.split()])
+        if data_type == 0:
+            return np.array(result, dtype='float')
+        else:
+            return np.array(result, dtype='int')
+
+
+    fourier = readData("mfeat-fou.txt", 0)
+    profcorr = readData("mfeat-fac.txt", 1)
+    pixels = readData("mfeat-pix.txt", 1)
+    morpho = readData("mfeat-mor.txt", 0)
+
+    markers = ['o', '2', '<', '*', 'h', 'x', 'D', '|', '_', 'v']
+    mypalette = ['green', 'purple', 'pink', 'blue', 'black',
+                 'brown', 'yellow', 'orange', 'gray', 'red']
+
+    is_distance = [False] * 4
+
+    mvmds = MVMDS()
+    projection = mvmds.fit_transform([fourier, profcorr, pixels, morpho],
+                                      is_distance, k=2)
+    for i in range(10):
+        plt.scatter(projection[i * 200:200 * (i + 1), 0],
+                    projection[i * 200:200 * (1 + i), 1],
+                    c=mypalette[i], marker=markers[i])
+    plt.axis('off')
+    plt.show()
+    
+**Total running time of the script:** ( 0 minutes 11.5 seconds)

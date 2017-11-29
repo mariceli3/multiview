@@ -1,0 +1,17 @@
+  
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+CPC
+===
+Multiview Common Principal Components 
+-------------------------------------
+
+   
+.. automodule:: cpcmv
+
+.. autoclass:: MVCPC
+
+  .. automethod:: fit
+  .. automethod:: fit_transform

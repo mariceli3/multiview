@@ -1,0 +1,58 @@
+Metadata-Version: 1.1
+Name: multiview
+Version: 1.0
+Summary: Multiview clustering and dimensionality reduction
+Home-page: http://
+Author: María Araceli Burgueño Caballero
+Author-email: mburgueno@uoc.edu
+License: UNKNOWN
+Download-URL: http://
+Description-Content-Type: UNKNOWN
+Description: 
+            Multiview clustering and dimensionality reduction
+            -------------------------------------------------
+            The ``multiview`` package provides multiview methods to work with
+            multiview data (datasets with several data matrices from the same
+            samples). It contains methods for multiview dimensionality reduction
+            and methods for multiview clustering.
+        
+            Multiview dimensionality reduction
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            Given a multiview dataset with ``v`` input data matrices,multiview
+            dimensionality reduction methods produce a single, low-dimensional
+            projection of the input data samples, trying to mantain as much of the
+            original information as possible.
+        
+            Package ``multiview`` offers the function :doc:`mvmds` to perform multiview
+            dimensionality reduction in a similar way than the multidimensional scaling
+            method (cmdscale in R).
+        
+            Another dimensionality reduction function in this package is :doc:`mvtsne`,
+            that extends ``tsne`` in R to multiview data.
+        
+            Multiview clustering
+            ~~~~~~~~~~~~~~~~~~~~
+            Given a multiview dataset with ``v`` input data matrices, multiview
+            clustering methods produce a single clustering assignment, considering
+            the information from all the input views.
+            Package ``multiview`` offers the function :doc:`mvsc` to perform multiview
+            spectral clustering. It is an extension to spectral clustering
+            (``kernlab::specc`` in R) to multiview datasets.
+            
+Keywords: multiview,clustering,dimensionality reduction
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Other Environment
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Python Software Foundation License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence

@@ -13,22 +13,9 @@ import scipy.sparse.linalg as sparse
 
 
 def cpc(x, k=0):
-    if x.shape[1] != x.shape[2]:
-        raise ValueError("matrices have different size from mx n x n. "
-                         "Size found instead is %d x %d x %d" % x.shape)
     # Adapt parameter names to those used by Trendafilov on his code
     n_g = np.array([x.shape[1]] * x.shape[0])
     p = x.shape[1]
-    if k == 0:
-        # If k is 0 then retrieve all the components
-        k = p
-    elif k > x.shape[1]:
-        k = p
-        warnings.warn("k is greater than matrix dimension. Maximum possible \
-            number of components is computed instead.")
-    elif k < 0:
-        raise ValueError("k value must be between 0 and number of samples"
-                         " of data matrix.")
     # Shape of matrix is consider as number of matrices, number of rows and
     # number of colums.
     mcas = x.shape[0]
@@ -57,7 +44,7 @@ def cpc(x, k=0):
             d[:, m] = np.dot(np.dot(q.T, x[m]), q)
 
         # Second for-loop
-        for i in np.arange(iterator):
+        for _ in np.arange(iterator):
             s = np.zeros((p, p))
             for m in np.arange(mcas):
                 s += (n_g[m] * x[m] / d[:, m])
@@ -161,17 +148,20 @@ class MVCPC(BaseEstimator):
         >>>
         """
 
+        if x.shape[1] != x.shape[2]:
+            raise ValueError("matrices have different size from mx n x n. "
+                             "Size found instead is %d x %d x %d" % x.shape)
+        if self.k == 0:
+            # If k is 0 then retrieve all the components
+            self.k = x.shape[1]
+        elif self.k > x.shape[1]:
+            self.k = x.shape[1]
+            warnings.warn("k is greater than matrix dimension. Maximum "
+                          "possible number of components is computed instead.")
+        elif self.k < 0:
+            raise ValueError("k value must be between 0 and number of samples"
+                             " of data matrix.")
         D, CPC = cpc(x, self.k)
         self.eigenvalues_ = D
         self.eigenvectors_ = CPC
         return (self.eigenvalues_, self.eigenvectors_)
-
-
-############################################################
-#                           MAIN                           #
-############################################################
-# x = np.array([[[2, 1, 8], [4, 5, 6], [3, 7, 9]],
-#               [[1, 4, 7], [2, 5, 8], [3, 6, 9]]])
-# sipisi = MVCPC()
-# sipisi.fit(x)
-# print(sipisi.eigenvectors_)

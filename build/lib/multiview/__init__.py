@@ -1,5 +1,5 @@
 """
-The :mod:`sklearn.multiview` module implements multiview data techniques.
+The package implements multiview data techniques.
 """
 
 from .cpcmv import MVCPC

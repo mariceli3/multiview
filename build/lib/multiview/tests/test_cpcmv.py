@@ -22,8 +22,12 @@ def test_cpc():
 
 def test_cpc_error():
     # k value cannot be negative
-    data = np.arange(50, dtype=float).reshape((2, 5, 5))
-    assert_raises(ValueError, cpcmv.cpc, data, k=-2)
+    data = np.arange(40, dtype=float).reshape((2, 5, 4))
+    cpc_est = cpcmv.MVCPC(k=-2)
+    assert_raises(ValueError, cpc_est.fit, data)
+    # Second and third dimensions must be equal
+    cpc_est = cpcmv.MVCPC(k=2)
+    assert_raises(ValueError, cpc_est.fit, data)
 
 
 def test_cpcmv():

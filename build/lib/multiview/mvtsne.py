@@ -59,7 +59,7 @@ def find_pooling(X, is_distance, random_state, initial_dims=30, perplexity=30,
     """
 
     nviews = len(X)
-    eps = 2 ** (-52)  # typical machine precision
+    eps = np.finfo(float).eps
 
     # Preprocess input matrices
     for i in np.arange(nviews):
@@ -187,7 +187,6 @@ def find_pooling(X, is_distance, random_state, initial_dims=30, perplexity=30,
     # Run the optimizer to find the best set of weights. Start point at (1/v,..
     # Using bounds to limit the weights to 0..1
     x0 = random_state.rand(nviews)  # initial guess/values
-    # x0 = np.random.uniform(size=nviews)  # initial guess/values
     bounds = tuple(itertools.repeat((0, 1), nviews))
     opt = fmin_l_bfgs_b(objective_log_linear, x0, fprime=gradient_log_linear,
                         bounds=bounds)
@@ -196,8 +195,6 @@ def find_pooling(X, is_distance, random_state, initial_dims=30, perplexity=30,
 
     ########################################################
     # Compute KL between the different P's
-    # Yes I compute every combination as it is not symmetrical
-    # message('KL on Ps')
     kl_ps = np.zeros((nviews, nviews), dtype='float64')
     for i in np.arange(nviews):
         for j in np.arange(nviews):
@@ -254,10 +251,8 @@ def tsne_p(P, k=2, initial_dims=30, max_iter=1000, min_cost=0,
     epsilon = 500
     min_gain = 0.01
     initial_P_gain = 4
-    eps = 2 ** (-52)  # typical machine precision
+    eps = np.finfo(float).eps
     ydata = np.matrix(np.random.normal(size=(n, k)))
-    # ydata = np.matrix([[-0.7404359, 0.7135583], [0.2100850, 2.2511330],
-    #                    [-2.0600877, 0.1477126]])
 
     # Prepare for standard tSNE
     P = P * initial_P_gain
@@ -266,7 +261,6 @@ def tsne_p(P, k=2, initial_dims=30, max_iter=1000, min_cost=0,
     incs = np.zeros((ydata.shape))
     gains = np.ones((ydata.shape))
 
-    # Sure about this?
     cost = float("Inf")
     Q = None
 
@@ -466,8 +460,9 @@ class MvtSNE(BaseEstimator):
             raise ValueError("k value must be between 0 and number of samples"
                              " of data matrix.")
 
-        if self.initial_dims < 0 or self.min_cost < 0 or self.perplexity < 0 or self.max_iter < 0:
-            raise ValueError("Parameters cannot be negative.")
+        if self.initial_dims < 0 or self.min_cost < 0:
+            if self.perplexity < 0 or self.max_iter < 0:
+                raise ValueError("Parameters cannot be negative.")
 
         for i in np.arange(len(X) - 1):
             for j in np.arange(i - 1, len(X)):
@@ -501,25 +496,3 @@ class MvtSNE(BaseEstimator):
         for parameter, value in parameters.items():
             setattr(self, parameter, value)
         return self
-
-
-############################################################
-#                           MAIN                           #
-############################################################
-# m = np.array([[1, 4, 7], [2, 5, 8], [3, 6, 9]])
-# q = np.array([[9, 6, 3], [8, 5, 2], [7, 4, 1]])
-# r = np.array([[2, 1, 8], [4, 5, 6], [3, 7, 9]]).T
-# matrices = [m, q, r]
-# is_distance = [False, False, False]
-# mvtsne = MvtSNE()
-# result = mvtsne.fit_transform(matrices, is_distance)
-# print(result)
-# initial_dims = 20
-# perplexity = 30
-# whiten = True
-# print(find_pooling(matrices, is_distance))
-# m = np.array([[1, 4, 7], [2, 5, 8], [3, 6, 9]])
-# q = np.array([[9, 6, 3], [8, 5, 2], [7, 4, 1]])
-# r = np.array([[2, 1, 8], [4, 5, 6], [3, 7, 9]]).T
-# P[:] = m, q, r
-# tsne_utils.gradient_log_linear(P, [2, 1, 2], nviews)

@@ -1,7 +1,7 @@
 """
-===========================
+==============
 Multiview tSNE
-===========================
+==============
 
 An example plot of multiview tSNE, using multiples views from same data thanks
 to data given in `UCI Machine Learning Repository
@@ -20,7 +20,7 @@ def readData(filename, data_type=0):
 
     Parameters
     ----------
-    ilename: string
+    filename: string
         Path or name of the txt file.
     data_type: integer, default 0
         Specifies the matrix datatype. If data_type is 0, data loaded will be
@@ -50,6 +50,8 @@ def readData(filename, data_type=0):
         return np.array(result, dtype='int')
 
 
+#####################################################
+
 fourier = readData("mfeat-fou.txt", 0)
 profcorr = readData("mfeat-fac.txt", 1)
 pixels = readData("mfeat-pix.txt", 1)
@@ -64,7 +66,6 @@ distance = [False] * 4
 mvtsne = MvtSNE(k=2)
 projection = mvtsne.fit_transform(
     [fourier, profcorr, pixels, morpho], distance)
-# print(projection)
 
 projection = projection[0]
 for i in range(10):

@@ -170,24 +170,6 @@ def mvsc(x, is_distance, k, sigmas=None, neighbours=None, clustering=True):
 
     """
 
-    if len(x) != len(is_distance):
-        raise ValueError("Data samples and is_distance lengths does not match."
-                         " Data sample length: %d, is_distance length: %d" %
-                         (len(x), len(is_distance)))
-    if k > x[0].shape[0]:
-        k = x[0].shape[0]
-        warnings.warn("k is greater than matrix dimension. k=%d is computed "
-                      "instead." % x[0].shape[0])
-    elif k < 0:
-        raise ValueError("k value must be between 0 and number of samples"
-                         " of data matrix.")
-
-    for i in np.arange(len(x) - 1):
-        for j in np.arange(i - 1, len(x)):
-            if x[i].shape[0] != x[j].shape[0]:
-                raise ValueError("Input data matrices have no same number of "
-                                 "samples (rows).")
-
     nviews = len(x)  # Number of input matrices
     if sigmas is not None:
         if isinstance(sigmas, Number):
@@ -384,7 +366,7 @@ class MVSC(BaseEstimator):
             function of each input view.
 
         Raises
-         ------
+        ------
 
             ValueError: Matrices are not square matrices, k value is negative
             or data samples and is_distance parameters do not have the same
@@ -410,6 +392,24 @@ class MVSC(BaseEstimator):
             [1.7320508075688774, 1.7320508075688774, 5.2779168675293677])
         """
 
+        if len(x) != len(is_distance):
+            raise ValueError("Data samples and is_distance lengths does not"
+                             "match. Data sample length: %d, is_distance "
+                             "length: %d" % (len(x), len(is_distance)))
+        if self.k > x[0].shape[0]:
+            self.k = x[0].shape[0]
+            warnings.warn("k is greater than matrix dimension. k=%d is "
+                          "computed instead." % x[0].shape[0])
+        elif self.k < 0:
+            raise ValueError("k value must be between 0 and number of samples"
+                             " of data matrix.")
+
+        for i in np.arange(len(x) - 1):
+            for j in np.arange(i + 1, len(x)):
+                if x[i].shape[0] != x[j].shape[0]:
+                    raise ValueError("Input data matrices have no same number "
+                                     "of samples (rows).")
+
         kmeans_clust, cpcresult_evalues, cpcresult_evectors, my_sigmas = mvsc(
             x, is_distance, self.k, self.sigmas, self.neighbours,
             self.clustering)
@@ -428,22 +428,3 @@ class MVSC(BaseEstimator):
         for parameter, value in parameters.items():
             self.setattr(parameter, value)
         return self
-
-
-############################################################
-#                           MAIN                           #
-############################################################
-# mat = np.array([[2, 1, 8], [4, 5, 6], [3, 7, 9]]).T
-# m = np.array([[1, 4, 7], [2, 5, 8], [3, 6, 9]])
-# q = np.array([[9, 6, 3], [8, 5, 2], [7, 4, 1]])
-# r = np.array([[2, 1, 8], [4, 5, 6], [3, 7, 9]]).T
-# matrices = [m, q, r]
-# distance_bool = [False, False, False]
-# # # mat4 = np.array([[16,15,14,13], [12,11,10,9], [8,7,6,5], [4,3,2,1]]).T
-
-# # # lap = laplacian_ng(mat)
-# # # sigma = suggested_sigma(mat)
-# # # gaussian = distance_gaussian_similarity(mat, sigma)
-# mvsc_est = MVSC(k=3)
-# spectral_c = mvsc_est.fit_transform(matrices, distance_bool)
-# print(spectral_c)

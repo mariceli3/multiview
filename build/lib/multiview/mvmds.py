@@ -4,7 +4,8 @@ pattern of proximities among a set of matrices. Likewise, these matrices are
 composed of different attributes, which have a pattern of proximities as well.
 Coding of two principal functions found in mvmds file. The first function,
 preprocess mvmds, preprocess data for multiview MDs algorithm The second,
-md_mds, computes the MDS algorithm itself for a set of matrices."""
+md_mds, computes the MDS algorithm itself for a set of matrices.
+"""
 
 
 import numpy as np
@@ -38,11 +39,6 @@ def preprocess_mvmds(values):
     col_means = np.mean(p_matrix, axis=0)
     all_means = np.mean(p_matrix)
 
-    # TODO: optimize this code
-    # for i in np.arange(p_matrix.shape[0]):
-    #     for j in np.arange(p_matrix.shape[0]):
-    #         p_matrix[i, j] += (all_means - row_means[i] - col_means[j])
-    # p_matrix1 = values ** 2
     p_matrix += all_means
     p_matrix.T[:, ] -= row_means[:]
     p_matrix -= col_means
@@ -92,23 +88,6 @@ def mvmds(x, is_distance, k=2):
         data samples and is_distance parameters do not have the same length.
     """
 
-    if len(x) != len(is_distance):
-        raise ValueError("Data samples and is_distance lengths does not "
-                         "match. Data sample length: %d, is_distance "
-                         "length: %d" % (len(x), len(is_distance)))
-
-    if k > x[0].shape[0]:
-        k = x[0].shape[0]
-        warnings.warn("k is greater than matrix dimension. k=%d is "
-                      "computed instead." % x[0].shape[0])
-    elif k < 0:
-        raise ValueError("k value must be between 0 and number of samples"
-                         " of data matrix.")
-    for i in np.arange(len(x) - 1):
-        for j in np.arange(i - 1, len(x)):
-            if x[i].shape[0] != x[j].shape[0]:
-                raise ValueError("Input data matrices have no same number "
-                                 "of samples (rows).")
     # Number of rows/observations
     num_obs = x[0].shape[0]
     my_mat = np.zeros((len(x), num_obs, num_obs))
@@ -126,8 +105,7 @@ def mvmds(x, is_distance, k=2):
 
 
 class MVMDS(BaseEstimator):
-    """Multiview Multidimensional Scaling.
-
+    """
     It  receives two or more feature matrices or distance matrices, according
     to is_distance parameters and produces a low-dimensional representation
     of the samples according to the combined information in all the input data.
@@ -177,7 +155,7 @@ class MVMDS(BaseEstimator):
             A list of data matrices. Matrices can be raw data or distance
             matrices. In the case of plain data matrices, euclidean distance
             will be used to generate a distance matrix for that data view.
-            
+
         is_distance : list
             Each boolean value indicates wheter the matrix in x with the same
             index is a distance matrix or not.
@@ -192,7 +170,7 @@ class MVMDS(BaseEstimator):
         Computes euclidean distances of X according to ``is_distance``,
         preprocess these data, fit and return them.
 
-         Parameters
+        Parameters
         ----------
 
         x : list
@@ -231,6 +209,23 @@ class MVMDS(BaseEstimator):
                [ 0.79752467 -0.17498877]])
         """
 
+        if len(x) != len(is_distance):
+            raise ValueError("Data samples and is_distance lengths does not "
+                             "match. Data sample length: %d, is_distance "
+                             "length: %d" % (len(x), len(is_distance)))
+
+        if self.k > x[0].shape[0]:
+            self.k = x[0].shape[0]
+            warnings.warn("k is greater than matrix dimension. k=%d is "
+                          "computed instead." % x[0].shape[0])
+        elif self.k < 0:
+            raise ValueError("k value must be between 0 and number of samples"
+                             " of data matrix.")
+        for i in np.arange(len(x) - 1):
+            for j in np.arange(i + 1, len(x)):
+                if x[i].shape[0] != x[j].shape[0]:
+                    raise ValueError("Input data matrices have no same number "
+                                     "of samples (rows).")
         common = mvmds(x, is_distance, self.k)
         self.components_ = common
         return self.components_

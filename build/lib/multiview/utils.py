@@ -1,9 +1,7 @@
 """ Utilities to be used in this package.
 
-There are mainly four functions to help other classes:
-Hbeta, x2p and whiten for the tsne algorithm and distance_between_rows to
-compute row distances (euclidean distance) in a matrix and return those
-distances."""
+There are mainly three functions to help other classes:
+Hbeta, x2p and whiten for the tsne algorithm ."""
 
 ___version___ = '1.0'
 ___author___ = 'Maria Araceli Burgueño Caballero'
@@ -12,7 +10,6 @@ ___status___ = "Pre-Production"
 
 
 import numpy as np
-from scipy.spatial.distance import sqeuclidean
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import check_array
 
@@ -56,36 +53,6 @@ def Hbeta(D, beta):
         H = np.log(sumP) + beta * np.sum(np.dot(D, P)) / sumP
         P -= sumP
     return (H, P)
-
-
-def distance_between_rows(X):
-    """Compute euclidean distance between rows of data matrix.
-
-    Parameters
-    ----------
-    X : array_like or ndarray.
-        Input data.
-
-    Returns
-    -------
-    dist : ndarray (2D).
-        Simmetric matrix of computed distance between rows.
-
-    Examples
-    --------
-
-    >>> x = np.array(([2, 4, 3], [1, 5, 7], [8, 6, 9])).T
-    >>> distance_between_rows(x)
-        [[ 0.          4.89897949  6.164414  ]
-         [ 4.89897949  0.          3.74165739]
-         [ 6.164414    3.74165739  0.        ]]
-    """
-    X = check_array(X)
-    dist = np.zeros((X.shape[0], X.shape[0]))
-    for i in range(X.shape[0] - 1):
-        for j in range(i + 1, X.shape[0]):
-            dist[i, j] = dist[j, i] = np.sqrt(sqeuclidean(X[i], X[j]))
-    return dist
 
 
 def x2p(X, perplexity=15, tol=1e-5):
@@ -211,28 +178,3 @@ def whiten(X, row_norm=False, verbose=0, n_comp=-1):
     K = np.matrix(K[:n_comp, :].reshape((n_comp, p)))
     X = np.dot(K, X).T
     return X
-
-
-############################################################
-#                           MAIN                           #
-############################################################
-# hbeta = Hbeta(np.array([[1, 2, 3], [2, 3, 4], [5, 6, 2]]), 3)
-# print("H -> %g\nP-> %a" % hbeta)
-# x = np.array(([1, 2, 3], [4, 5, 6], [7, 8, 9])).T
-# xx = np.array(([2, 4, 3], [1, 5, 7], [8, 6, 9])).T
-# whitening = whiten(x)  # , row_norm=True)
-# print(whitening)
-# distance = x2p(xx)
-# print(distance)
-# print(np.var(np.array([8,6,9], dtype="float64")))
-
-# Check wheter function is less time consuming
-# xx = np.random.rand(2000, 2000)
-# beginning1 = time.time()
-# function = distance_between_rows(xx)
-# end1 = time.time() - beginning1
-# print("Distance between rows finished in %g" % end1)
-# beginning2 = time.time()
-# function1 = euclidean_distances(xx)
-# end2 = time.time() - beginning2
-# print("Euclidean distances finished in %g" % end2)

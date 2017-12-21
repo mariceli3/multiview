@@ -7,7 +7,7 @@ def test_hbeta():
     data = np.arange(25, dtype=float).reshape((5, 5))
     H, P = utils.Hbeta(data, 2)
 
-    real_H = 100.145867478
+    real_H = 100.145867
     real_P = np.array([[8.64664717e-01, 1.17019644e-01, 1.58368867e-02,
                         2.14328955e-03, 2.90062698e-04],
                        [3.92557174e-05, 5.31268363e-06, 7.18993544e-07,
